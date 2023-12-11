@@ -11,25 +11,5 @@
         MaxHeight="1080"
         MinHeight="400"
         Title="MainWindow" Height="450" Width="800">
-    
-    <TabControl>
-        <TabItem>
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse Width="10" Height="10" Fill="DarkGray"/>
-                    <TextBlock>Tab 1</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <StackPanel>
-                <TextBlock>Enter some text</TextBlock>
-                <TextBox Name="textBox1" Width="50"/>
-            </StackPanel>
-        </TabItem>
-        <TabItem Header="Tab 2">
-            <!--Bind TextBlock.Text to the TextBox on the first
-    TabItem.-->
-            <TextBlock Text="{Binding ElementName=textBox1, Path=Text}"/>
-        </TabItem>
-    </TabControl>
-    
+
 </Window>

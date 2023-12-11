@@ -13,5 +13,15 @@ namespace WPF_Course_project
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            // Call the base implementation first
+            base.OnStartup(e);
+
+            // Add your custom logic here
+            // For example, show a custom startup window or perform some initialization tasks
+            int x = 32;
+        }
     }
+
 }
