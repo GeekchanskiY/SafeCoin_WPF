@@ -6,4 +6,28 @@
     <Color x:Key="AccentColor">#F99417</Color>
     <Color x:Key="GreenColor">#14FF00</Color>
     <Color x:Key="RedColor">#F91717</Color>
+
+    <Style x:Key="MyButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" 
+                        BorderThickness="1"
+                        Padding="0,0" 
+                        BorderBrush="DarkGray" 
+                        CornerRadius="1" >
+
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
+using WPF_Course_project.Models;
 
 namespace WPF_Course_project
 {
@@ -16,8 +18,11 @@ namespace WPF_Course_project
     public partial class App : Application
     {
         public static App Me => ((App)Application.Current);
-        public int x = 0;
+        
         public static HttpClient client = new HttpClient();
+
+        public static User? CurrentUser = null;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             // Call the base implementation first
@@ -25,8 +30,8 @@ namespace WPF_Course_project
 
             // Add your custom logic here
             // For example, show a custom startup window or perform some initialization tasks
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            x = 32;
+            // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            // x = 32;
         }
         public async Task<string> get_json(string url)
         {

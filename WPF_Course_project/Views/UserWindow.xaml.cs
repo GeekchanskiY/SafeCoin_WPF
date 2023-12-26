@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,27 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Course_project.Models;
 
-namespace WPF_Course_project
+namespace WPF_Course_project.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для UserWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserWindow : Window
     {
-        
-        
-        public MainWindow()
-        {
-            
-            
-            InitializeComponent();
-        }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        public User User { get; private set; }
+        public UserWindow(User user)
         {
-            
-            Buttonz.Content = await App.Me.get_json("http://127.0.0.1:8000/api/cryptos/");
+            InitializeComponent();
+            User = user;
+            DataContext = User;
+        }
+        void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }
