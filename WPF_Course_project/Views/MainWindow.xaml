@@ -28,30 +28,75 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <!-- Header -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="5" Grid.ColumnSpan="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="6" Grid.ColumnSpan="2">
             <Button x:Name="btnMinimize" Click="btnMinimize_Click" Content="_" Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"></Button>
             <Button x:Name="btnMaximize" Click="btnMaximize_Click" Content="^" Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"></Button>
             <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
         </StackPanel>
 
-        
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{StaticResource MyButtonStyle}" Click="User_Click">
                 <Image x:Name="UserIcon" Width="40px" Height="40px" Source="/Assets/user_icon.png" Stretch="Fill" />
             </Button>
         </StackPanel>
-        <Button x:Name="AdminButton" Content="Admin" Margin="0,68,0,0" Grid.Row="5" VerticalAlignment="Top" Click="Button_Click_1" Visibility="Hidden"/>
+        <Button x:Name="AdminButton" Content="Admin" Margin="0,68,0,0" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Click="Button_Click_1" Visibility="Hidden"/>
 
+        <!-- Content -->
+        <ListBox x:Name="cryptoList" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="4" ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Id}" FontSize="8" />
+                        <TextBlock Text="{Binding Name}" FontSize="16" />
 
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="#FFF">Filters</Label>
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Price</Label>
+            <TextBox x:Name="PriceFrom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <TextBox x:Name="PriceTo" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Market Cap</Label>
+            <TextBox x:Name="CapFrom" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <TextBox x:Name="CapTo" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Volume</Label>
+            <TextBox x:Name="VolumeFrom" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <TextBox x:Name="VolumeTo" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Transactions</Label>
+            <TextBox x:Name="TransactionFrom" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <TextBox x:Name="TransactionsTo" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
+            <Button x:Name="ApplyFiltersButton" Click="ApplyFilters"  Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="100">Apply</Button>
+        </Grid>
     </Grid>
 </Window>

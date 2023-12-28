@@ -35,8 +35,8 @@ namespace WPF_Course_project.Views
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            // Close();
-            Application.Current.Shutdown();
+            Close();
+            // Application.Current.Shutdown();
         }
 
         private void btnMaximize_Click(object sender, RoutedEventArgs e)

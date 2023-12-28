@@ -39,7 +39,7 @@ Background="#1B1B2F"
             <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
         </StackPanel>
 
-        <ListBox x:Name="usersList" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
+        <ListBox x:Name="cryptoList" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -51,7 +51,7 @@ Background="#1B1B2F"
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="testaddbutton" Content="Добавить" Margin="10" Click="Add_Click" />
+            <Button Content="Добавить" Margin="10" Click="Add_Click" />
             <Button Content="Изменить" Margin="10" Click="Edit_Click"  />
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  />
         </StackPanel>

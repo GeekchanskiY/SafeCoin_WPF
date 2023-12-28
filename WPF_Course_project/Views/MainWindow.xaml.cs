@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -99,9 +100,9 @@ namespace WPF_Course_project
             // гарантируем, что база данных создана
             db.Database.EnsureCreated();
             // загружаем данные из БД
-            db.Users.Load();
+            db.Cryptos.Load();
             // и устанавливаем данные в качестве контекста
-            DataContext = db.Users.Local.ToObservableCollection();
+            DataContext = db.Cryptos.Local.ToObservableCollection();
         }
 
         
@@ -141,8 +142,7 @@ namespace WPF_Course_project
             {
                 if (App.CurrentUser.IsAdmin == true)
                 {
-                    MessageBox.Show("Admin panel button appeared on left bottom corner", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    
                     AdminButton.Visibility = Visibility.Visible;
                 }
             }
@@ -161,6 +161,16 @@ namespace WPF_Course_project
                     }
                 }
             }
+        }
+        private void ApplyFilters(object sender, RoutedEventArgs eventArgs)
+        {
+            List<Crypto> queryset = db.Cryptos.Local.ToList();
+            int filterValue = 0;
+            if (CapFrom.Text != "From")
+            {
+                queryset = queryset.Where(crypto => crypto.MarketCap >= filterValue).ToList();
+            }
+            DataContext = new ObservableCollection<Crypto>(qeuryset);
         }
     }
 }

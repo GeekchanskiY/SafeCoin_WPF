@@ -80,7 +80,7 @@ namespace WPF_Course_project.Views
                 if (existingUser != null)
                 {
                     // User exists, you can handle the existing user as needed
-                    MessageBox.Show("User already exists");
+                    // MessageBox.Show("User already exists");
                 }
                 else
                 {

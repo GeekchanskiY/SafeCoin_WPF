@@ -28,12 +28,13 @@ namespace WPF_Course_project.Views
         public CryptoAdminWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            // Close();
-            Application.Current.Shutdown();
+            Close();
+            // Application.Current.Shutdown();
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -50,19 +51,29 @@ namespace WPF_Course_project.Views
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            UserWindow UserWindow = new UserWindow(new User());
-            if (UserWindow.ShowDialog() == true)
+            // READY
+            CryptoWindow cryptoWindow = new CryptoWindow(new Crypto());
+            if (cryptoWindow.ShowDialog() == true)
             {
-                User User = UserWindow.User;
-                db.Users.Add(User);
+                Crypto crypto = cryptoWindow.Crypto;
+                db.Cryptos.Add(crypto);
                 db.SaveChanges();
+                cryptoList.Items.Refresh();
+                MessageBox.Show(db.Cryptos.Count().ToString(), "Login", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Admin panel button appeared on left bottom corner", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
         }
         // редактирование
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+     
             // получаем выделенный объект
-            Crypto? user = userList.SelectedItem as Crypto;
+            Crypto? user = cryptoList.SelectedItem as Crypto;
             // если ни одного объекта не выделено, выходим
             if (user is null) return;
 
@@ -71,15 +82,19 @@ namespace WPF_Course_project.Views
             if (UserWindow.ShowDialog() == true)
             {
                 // получаем измененный объект
-                user = db.Users.Find(UserWindow.User.Id);
+                user = db.Cryptos.Find(UserWindow.Crypto.Id);
                 if (user != null)
                 {
-                    user.Username = UserWindow.User.Username;
-                    user.Email = UserWindow.User.Email;
-                    user.Password = UserWindow.User.Password;
-                    user.AboutMe = UserWindow.User.AboutMe;
+                    user.Name = UserWindow.Crypto.Name; 
+                    user.Symbol = UserWindow.Crypto.Symbol;
+                    user.Image = UserWindow.Crypto.Image;
+                    user.Price = UserWindow.Crypto.Price;
+                    user.Volume = UserWindow.Crypto.Volume;
+                    user.Symbol = UserWindow.Crypto.Symbol;
+                    user.MarketCap = UserWindow.Crypto.MarketCap;
+                    user.TransactionsCount = UserWindow.Crypto.TransactionsCount;
                     db.SaveChanges();
-                    usersList.Items.Refresh();
+                    cryptoList.Items.Refresh();
                 }
             }
         }
@@ -87,10 +102,10 @@ namespace WPF_Course_project.Views
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             // получаем выделенный объект
-            Crypto? user = usersList.SelectedItem as User;
+            Crypto? user = cryptoList.SelectedItem as Crypto;
             // если ни одного объекта не выделено, выходим
             if (user is null) return;
-            db.Users.Remove(user);
+            db.Cryptos.Remove(user);
             db.SaveChanges();
         }
 

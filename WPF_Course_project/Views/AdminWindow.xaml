@@ -36,8 +36,6 @@ Background="#1B1B2F"
         </Grid.ColumnDefinitions>
         <!-- Header -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="5" Grid.ColumnSpan="2">
-            <Button x:Name="btnMinimize" Click="btnMinimize_Click" Content="_" Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"></Button>
-            <Button x:Name="btnMaximize" Click="btnMaximize_Click" Content="^" Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"></Button>
             <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
         </StackPanel>
 

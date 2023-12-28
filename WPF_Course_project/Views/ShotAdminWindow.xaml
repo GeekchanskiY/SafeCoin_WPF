@@ -12,7 +12,45 @@ MaxHeight="1080"
 MinHeight="400"
 Background="#1B1B2F"
         Title="ShotAdminWindow" Height="450" Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"></WindowChrome>
+    </WindowChrome.WindowChrome>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="5" Grid.ColumnSpan="2">
+            <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
+        </StackPanel>
+        <ListBox x:Name="shotList" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Id}" FontSize="8" />
+                        <TextBlock Text="{Binding Name}" FontSize="16" />
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Добавить" Margin="10" Click="Add_Click" />
+            <Button Content="Изменить" Margin="10" Click="Edit_Click"  />
+            <Button Content="Удалить" Margin="10" Click="Delete_Click"  />
+        </StackPanel>
     </Grid>
 </Window>

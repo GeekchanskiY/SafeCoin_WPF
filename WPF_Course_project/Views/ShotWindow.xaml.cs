@@ -16,34 +16,21 @@ using WPF_Course_project.Models;
 namespace WPF_Course_project.Views
 {
     /// <summary>
-    /// Логика взаимодействия для CryptoWindow.xaml
+    /// Логика взаимодействия для ShotWindow.xaml
     /// </summary>
-    public partial class CryptoWindow : Window
+    public partial class ShotWindow : Window
     {
-        public Crypto Crypto { get; private set; }
-        public CryptoWindow(Crypto crypto)
+        public Shot Shot { get; private set; }
+        public ShotWindow(Shot shot)
         {
             InitializeComponent();
-            Crypto = crypto;
-            DataContext = Crypto;
-        }
+            Shot = shot;
+            DataContext = Shot;
 
+        }
         void Accept_Click(object sender, RoutedEventArgs e)
         {
-
             DialogResult = true;
-        }
-
-        void Reviews(object sender, RoutedEventArgs e)
-        {
-
-            // DialogResult = true;
-        }
-
-        void ShowShots(object sender, RoutedEventArgs e)
-        {
-            ShotAdminWindow win = new ShotAdminWindow(Crypto);
-            win.ShowDialog();
         }
     }
 }

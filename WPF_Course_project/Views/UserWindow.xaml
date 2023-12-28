@@ -37,10 +37,10 @@ Background="#1B1B2F"
             <ColumnDefinition Width="100" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Name" />
-        <TextBlock Text="Email" Grid.Row="1" />
-        <TextBlock Text="Password" Grid.Row="2" />
-        <TextBlock Text="Aboutme" Grid.Row="3" />
+        <TextBlock Text="Name" Foreground="#FFF" />
+        <TextBlock Text="Email" Grid.Row="1" Foreground="#FFF" />
+        <TextBlock Text="Password" Grid.Row="2" Foreground="#FFF" />
+        <TextBlock Text="Aboutme" Grid.Row="3" Foreground="#FFF" />
 
         <TextBox Text="{Binding Username}" Grid.Column="1" />
         <TextBox Text="{Binding Email}" Grid.Column="1" Grid.Row="1" />
