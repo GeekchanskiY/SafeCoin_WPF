@@ -16,6 +16,8 @@
         >
     <Window.Resources>
         <local:ImageUrlConverter x:Key="ImageUrlConverter" />
+
+        <local:MillionsConverter x:Key="MillionsConverter"/>
     </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"></WindowChrome>
@@ -53,7 +55,10 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{StaticResource MyButtonStyle}" Click="User_Click">
-                <Image x:Name="UserIcon" Width="40px" Height="40px" Source="/Assets/user_icon.png" Stretch="Fill" />
+                <Image x:Name="UserIcon" Width="20px" Height="20px" Source="/Assets/user_icon.png" Stretch="Fill" />
+            </Button>
+            <Button Style="{StaticResource MyButtonStyle}" Click="NotificationsClick">
+                <Image x:Name="NotifyIcon" Width="20px" Height="20px" Source="/Assets/Notification.png" Stretch="Fill" />
             </Button>
         </StackPanel>
         <Button x:Name="AdminButton" Content="Admin" Margin="0,55,0,0" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Height="25" Click="Button_Click_1" Style="{StaticResource MinimalisticButton}" Visibility="Hidden">
@@ -83,10 +88,10 @@
                             <Image Width="30" Height="30" Source="{Binding Image, Converter={StaticResource ImageUrlConverter}}" />
                             <TextBlock Text="{Binding Name}" FontSize="12"  Width="50" Margin="5" />
                             <TextBlock Text="{Binding Symbol}" FontSize="12"  Width="30" Margin="5" />
-                            <TextBlock Text="{Binding Price}" FontSize="12"  Width="50" Margin="5" />
-                            <TextBlock Text="{Binding Volume}" FontSize="12"  Width="50" Margin="5" />
-                            <TextBlock Text="{Binding MarketCap}" FontSize="12"  Width="50" Margin="5" />
-                            <TextBlock Text="{Binding TransactionsCount}" FontSize="12"  Width="30" Margin="5" />
+                            <TextBlock Text="{Binding Price, Converter={StaticResource MillionsConverter}}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding Volume, Converter={StaticResource MillionsConverter}}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding MarketCap, Converter={StaticResource MillionsConverter}}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding TransactionsCount, Converter={StaticResource MillionsConverter}}" FontSize="12"  Width="45" Margin="5" />
 
                         </WrapPanel>
                     </Border>
@@ -209,8 +214,7 @@
             <Button Click="ResetFilters" Grid.Column="1" FontSize="16" Content="⟳" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Top" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"/>
 
         </Grid>
-        <Button Click="SelectClick" Grid.Column="7" Content="Select item" HorizontalAlignment="Center" Margin="0,29,0,0" Grid.Row="5" VerticalAlignment="Top"/>
-        <Button Click="NotificationsClick" Grid.Column="4" Content="Notifications" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Style="{StaticResource MinimalisticButton}" Click="SelectClick" Grid.Column="7" Content="Select item" HorizontalAlignment="Center" Height="30" Width="100" Margin="0,20,0,0" Grid.Row="5" VerticalAlignment="Top"/>
         <Label Foreground="#FFF" Grid.Column="4" Content="Name" HorizontalAlignment="Left" Margin="51,1,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="1.103,0.449"/>
         <Label Foreground="#FFF" Grid.Column="5" Content="Price" HorizontalAlignment="Left" Margin="51,1,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <Label Foreground="#FFF" Grid.Column="6" Content="Vol" HorizontalAlignment="Left" Margin="75,0,0,0" Grid.Row="1" VerticalAlignment="Top"/>

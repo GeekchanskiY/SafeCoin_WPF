@@ -11,6 +11,7 @@
     <None Remove="Assets\icons8-избранное-50.png" />
     <None Remove="Assets\icons8-напоминания-100.png" />
     <None Remove="Assets\icons8-обновить-30.png" />
+    <None Remove="Assets\Notification.png" />
     <None Remove="Assets\UserIcon.png" />
     <None Remove="Assets\user_icon.png" />
   </ItemGroup>
@@ -34,6 +35,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons8-обновить-30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Notification.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\user_icon.png">

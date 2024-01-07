@@ -1,27 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WPF_Course_project.Models;
-using WPF_Course_project.ViewModels;
-using WPF_Course_project.Views;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media.Imaging;
+using WPF_Course_project.Models;
+using WPF_Course_project.Views;
 
 namespace WPF_Course_project
 {
@@ -40,14 +28,18 @@ namespace WPF_Course_project
                 try
                 {
                     bitmapImage.UriSource = new Uri(imageUrl, UriKind.Absolute);
-                } catch (System.UriFormatException) {
+                }
+                catch (System.UriFormatException)
+                {
                     return null;
                 }
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 try
                 {
                     bitmapImage.EndInit();
-                } catch (System.NotSupportedException) {
+                }
+                catch (System.NotSupportedException)
+                {
                     return null;
                 }
                 return bitmapImage;
@@ -61,6 +53,78 @@ namespace WPF_Course_project
             throw new NotImplementedException();
         }
     }
+    public class MillionsConverter : IValueConverter
+    {
+        public static float StringToFloat(string value)
+        {
+            if (value.EndsWith("K"))
+            {
+                return float.Parse(value.Substring(0, value.Length - 1)) * 1000f;
+            }
+            else if (value.EndsWith("M"))
+            {
+                return float.Parse(value.Substring(0, value.Length - 1)) * 1000000f;
+            }
+            else if (value.EndsWith("B"))
+            {
+                return float.Parse(value.Substring(0, value.Length - 1)) * 1000000000f;
+            }
+            else
+            {
+                return float.Parse(value);
+            }
+        }
+
+        public static string FloatToString(float value)
+        {
+            if (value < 0.1f)
+            {
+                return value.ToString("0.00");
+            }
+            else if (value < 1000f)
+            {
+                return value.ToString("0.##");
+            }
+            else if (value < 1000000f)
+            {
+                return (value / 1000f).ToString("0.##") + "K";
+            }
+            else if (value < 1000000000f)
+            {
+                return (value / 1000000f).ToString("0.##") + "M";
+            }
+            else
+            {
+                return (value / 1000000000f).ToString("0.##") + "B";
+            }
+        }
+
+
+        public object Convert(object val, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            /*int val;
+            if (int.TryParse(value.ToString(), out val))
+            {
+                return val.ToString();
+            }*/
+            float value;
+            if (float.TryParse(val.ToString(), out value))
+            {
+                return MillionsConverter.FloatToString(value);
+
+            }
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     public partial class MainWindow : Window
     {
 
@@ -97,8 +161,8 @@ namespace WPF_Course_project
 
         public MainWindow()
         {
-            
-            
+
+
             InitializeComponent();
             Loaded += MainWindow_Loaded;
         }
@@ -125,9 +189,11 @@ namespace WPF_Course_project
             if (WindowState == WindowState.Maximized)
             {
                 WindowState = WindowState.Normal;
-            } else {
+            }
+            else
+            {
                 WindowState = WindowState.Maximized;
-            }            
+            }
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -145,22 +211,22 @@ namespace WPF_Course_project
                 float lowestVolume = cryptos.Min(p => p.Volume);
                 float highestVolume = cryptos.Max(p => p.Volume);
                 int highestTran = cryptos.Max(p => p.TransactionsCount);
-                int lowestTran = cryptos.Max(p => p.TransactionsCount);
-                CapFrom.Text = lowestCap.ToString();
-                CapTo.Text = highestCap.ToString();
-                PriceFrom.Text = lowestPrice.ToString();
-                PriceTo.Text = highestPrice.ToString();
-                VolumeFrom.Text = lowestVolume.ToString();
-                VolumeTo.Text = highestVolume.ToString();
-                TransactionFrom.Text = lowestTran.ToString();
-                TransactionsTo.Text = highestTran.ToString();
+                int lowestTran = cryptos.Min(p => p.TransactionsCount);
+                CapFrom.Text = MillionsConverter.FloatToString(lowestCap);
+                CapTo.Text = MillionsConverter.FloatToString(highestCap);
+                PriceFrom.Text = MillionsConverter.FloatToString(lowestPrice);
+                PriceTo.Text = MillionsConverter.FloatToString(highestPrice);
+                VolumeFrom.Text = MillionsConverter.FloatToString(lowestVolume);
+                VolumeTo.Text = MillionsConverter.FloatToString(highestVolume);
+                TransactionFrom.Text = MillionsConverter.FloatToString(lowestTran);
+                TransactionsTo.Text = MillionsConverter.FloatToString(highestTran);
             }
             // и устанавливаем данные в качестве контекста
             DataContext = db.Cryptos.Local.ToObservableCollection();
-            
+
         }
 
-        
+
         private void User_Click(object sender, RoutedEventArgs e)
         {
             // testaddbutton.Content = "asd";
@@ -174,9 +240,10 @@ namespace WPF_Course_project
                         Application.Current.Shutdown();
                     }
                 }
-            } else
+            }
+            else
             {
-                
+
                 UserWindow UserWindow = new UserWindow(App.CurrentUser);
                 if (UserWindow.ShowDialog() == true)
                 {
@@ -197,7 +264,7 @@ namespace WPF_Course_project
             {
                 if (App.CurrentUser.IsAdmin == true)
                 {
-                    
+
                     AdminButton.Visibility = Visibility.Visible;
                 }
             }
@@ -214,31 +281,40 @@ namespace WPF_Course_project
                     if (admin.ShowDialog() == true)
                     {
                     }
+                    db.Cryptos.Load();
+                    DataContext = db.Cryptos.Local.ToObservableCollection();
+
                 }
             }
         }
         private void ApplyFilters(object sender, RoutedEventArgs eventArgs)
         {
             List<Crypto> queryset = db.Cryptos.Local.ToList();
-            int filterValue = 999999;
+            long filterValue;
             if (CapFrom.Text != "From")
             {
-                if (int.TryParse(CapFrom.Text, out filterValue))
+                try
                 {
+
+                    filterValue = (long)MillionsConverter.StringToFloat(CapFrom.Text);
+
                     queryset = queryset.Where(crypto => crypto.MarketCap >= filterValue).ToList();
-                } else
+                }
+                catch
                 {
                     MessageBox.Show("Value error on MarketCap From", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-               
+
+
             }
             if (CapTo.Text != "To")
             {
-                if (int.TryParse(CapTo.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(CapTo.Text);
                     queryset = queryset.Where(crypto => crypto.MarketCap <= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on MarketCap To", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -246,23 +322,27 @@ namespace WPF_Course_project
             }
             if (PriceTo.Text != "To")
             {
-                if (int.TryParse(PriceTo.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(PriceTo.Text);
                     queryset = queryset.Where(crypto => crypto.Price <= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Price To", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+
+
             }
             if (PriceFrom.Text != "From")
             {
-                if (int.TryParse(PriceFrom.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(PriceFrom.Text);
                     queryset = queryset.Where(crypto => crypto.Price >= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Price From", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -270,57 +350,69 @@ namespace WPF_Course_project
             }
             if (TransactionFrom.Text != "From")
             {
-                if (int.TryParse(TransactionFrom.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(TransactionFrom.Text);
                     queryset = queryset.Where(crypto => crypto.TransactionsCount >= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Transactions From", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+
+
             }
             if (TransactionsTo.Text != "To")
             {
-                if (int.TryParse(TransactionsTo.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(TransactionsTo.Text);
                     queryset = queryset.Where(crypto => crypto.TransactionsCount <= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Transactions To", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+
+
             }
             if (VolumeFrom.Text != "From")
             {
-                if (int.TryParse(VolumeFrom.Text, out filterValue))
+                try
                 {
+                    filterValue = (long)MillionsConverter.StringToFloat(VolumeFrom.Text);
                     queryset = queryset.Where(crypto => crypto.Volume >= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Volume From", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+
+
             }
-            if (TransactionsTo.Text != "To")
+            if (VolumeTo.Text != "To")
             {
-                if (int.TryParse(TransactionsTo.Text, out filterValue))
+                try
                 {
-                    queryset = queryset.Where(crypto => crypto.TransactionsCount <= filterValue).ToList();
+                    filterValue = (long)MillionsConverter.StringToFloat(VolumeTo.Text);
+                    queryset = queryset.Where(crypto => crypto.Volume <= filterValue).ToList();
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Value error on Volume To", "ValueError", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+
+
             }
             if (NameInput.Text != "Name Here")
             {
-                
+
                 queryset = queryset.Where(crypto => crypto.Name.Contains(NameInput.Text, StringComparison.OrdinalIgnoreCase)).ToList();
-                
+
 
             }
             DataContext = new ObservableCollection<Crypto>(queryset);
@@ -352,17 +444,18 @@ namespace WPF_Course_project
                 float lowestVolume = cryptos.Min(p => p.Volume);
                 float highestVolume = cryptos.Max(p => p.Volume);
                 int highestTran = cryptos.Max(p => p.TransactionsCount);
-                int lowestTran = cryptos.Max(p => p.TransactionsCount);
-                CapFrom.Text = lowestCap.ToString();
-                CapTo.Text = highestCap.ToString();
-                PriceFrom.Text = lowestPrice.ToString();
-                PriceTo.Text = highestPrice.ToString();
-                VolumeFrom.Text = lowestVolume.ToString();
-                VolumeTo.Text = highestVolume.ToString();
-                TransactionFrom.Text = lowestTran.ToString();
-                TransactionsTo.Text = highestTran.ToString();
+                int lowestTran = cryptos.Min(p => p.TransactionsCount);
+                CapFrom.Text = MillionsConverter.FloatToString(lowestCap);
+                CapTo.Text = MillionsConverter.FloatToString(highestCap);
+                PriceFrom.Text = MillionsConverter.FloatToString(lowestPrice);
+                PriceTo.Text = MillionsConverter.FloatToString(highestPrice);
+                VolumeFrom.Text = MillionsConverter.FloatToString(lowestVolume);
+                VolumeTo.Text = MillionsConverter.FloatToString(highestVolume);
+                TransactionFrom.Text = MillionsConverter.FloatToString(lowestTran);
+                TransactionsTo.Text = MillionsConverter.FloatToString(highestTran);
             }
             // и устанавливаем данные в качестве контекста
+
             DataContext = db.Cryptos.Local.ToObservableCollection();
         }
 
@@ -384,96 +477,105 @@ namespace WPF_Course_project
             Crypto rc;
             foreach (CryptoSub c in db.CryptoSubs.Where(c => c.UserId == App.CurrentUser.Id))
             {
-                rc = db.Cryptos.Where(z => z.Id == c.Id).First();
-                if (float.TryParse(c.LastValue, out last_value) && float.TryParse(c.RequiredValue, out required_value))
+                try
                 {
-                    if (c.Param == "Vol")
+                    rc = db.Cryptos.Where(z => z.Id == c.CryptoId).First();
+                    if (float.TryParse(c.LastValue, out last_value) && float.TryParse(c.RequiredValue, out required_value))
                     {
-                        if (last_value <  required_value)
+                        if (c.Param == "Vol")
                         {
-                            if (required_value > rc.Volume)
+                            if (last_value < required_value)
                             {
-                                MessageBox.Show("Volume raised to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
-                            } else
-                            {
-                                not_notified++;
-                            }
-                        } else
-                        {
-                            if (rc.Volume < required_value)
-                            {
-                                MessageBox.Show("Volume dropped to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
+                                if (required_value > rc.Volume)
+                                {
+                                    MessageBox.Show("Volume raised to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                             else
                             {
-                                not_notified++;
+                                if (rc.Volume < required_value)
+                                {
+                                    MessageBox.Show("Volume dropped to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                         }
-                    }
-                    if (c.Param == "Price")
-                    {
-                        if (last_value < required_value)
+                        if (c.Param == "Price")
                         {
-                            if (required_value > rc.Price)
+                            if (last_value < required_value)
                             {
-                                MessageBox.Show("Price raised to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
+                                if (required_value > rc.Price)
+                                {
+                                    MessageBox.Show("Price raised to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                             else
                             {
-                                not_notified++;
+                                if (rc.Price < required_value)
+                                {
+                                    MessageBox.Show("Price dropped to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                         }
-                        else
+                        if (c.Param == "MKT")
                         {
-                            if (rc.Price < required_value)
+                            if (last_value < required_value)
                             {
-                                MessageBox.Show("Price dropped to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
+                                if (required_value > rc.MarketCap)
+                                {
+                                    MessageBox.Show("Market cap raised to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                             else
                             {
-                                not_notified++;
+                                if (rc.MarketCap < required_value)
+                                {
+                                    MessageBox.Show("Market cap dropped to required value: " + c.RequiredValue, rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    db.CryptoSubs.Remove(c);
+                                }
+                                else
+                                {
+                                    not_notified++;
+                                }
                             }
                         }
-                    }
-                    if (c.Param == "MKT")
-                    {
-                        if (last_value < required_value)
-                        {
-                            if (required_value > rc.MarketCap)
-                            {
-                                MessageBox.Show("Market cap raised to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
-                            }
-                            else
-                            {
-                                not_notified++;
-                            }
-                        }
-                        else
-                        {
-                            if (rc.MarketCap < required_value)
-                            {
-                                MessageBox.Show("Market cap dropped to required value", rc.Name, MessageBoxButton.OK, MessageBoxImage.Information);
-                                db.CryptoSubs.Remove(c);
-                            }
-                            else
-                            {
-                                not_notified++;
-                            }
-                        }
-                    }
+                        db.SaveChanges();
+                        db.CryptoSubs.Load();
 
-
+                    }
                 }
-                    
-                
-                
+                catch
+                {
+                }
+
+
+
             }
             MessageBox.Show("Not changed amount: " + not_notified.ToString(), "Not changed", MessageBoxButton.OK, MessageBoxImage.Information);
-           }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +27,7 @@ namespace WPF_Course_project.Views.Pages
             // загружаем данные из БД
             //db.Users.Load();
             db.Cryptos.Load();
-            //db.Shots.Load();
+            db.Shots.Load();
             //db.Reviews.Load();
             // и устанавливаем данные в качестве контекста
             DataContext = db.Cryptos.Local.ToObservableCollection();
@@ -40,6 +41,17 @@ namespace WPF_Course_project.Views.Pages
             {
                 Crypto crypto = cryptoWindow.Crypto;
                 db.Cryptos.Add(crypto);
+                
+                db.SaveChanges();
+                db.Shots.Add(new Shot
+                {
+                    CryptoId = crypto.Id,
+                    MarketCap = crypto.MarketCap,
+                    Volume = crypto.Volume,
+                    Price = crypto.Price,
+                    Transactions = crypto.TransactionsCount,
+                    Time = DateTime.Now
+                });
                 db.SaveChanges();
                 cryptoList.Items.Refresh();
                 MessageBox.Show(db.Cryptos.Count().ToString(), "Login", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -56,26 +68,36 @@ namespace WPF_Course_project.Views.Pages
         {
 
             // получаем выделенный объект
-            Crypto? user = cryptoList.SelectedItem as Crypto;
+            Crypto? crypto = cryptoList.SelectedItem as Crypto;
             // если ни одного объекта не выделено, выходим
-            if (user is null) return;
+            if (crypto is null) return;
 
-            CryptoWindow UserWindow = new CryptoWindow(user);
+            CryptoWindow UserWindow = new CryptoWindow(crypto);
 
             if (UserWindow.ShowDialog() == true)
             {
                 // получаем измененный объект
-                user = db.Cryptos.Find(UserWindow.Crypto.Id);
-                if (user != null)
+                crypto = db.Cryptos.Find(UserWindow.Crypto.Id);
+                if (crypto != null)
                 {
-                    user.Name = UserWindow.Crypto.Name;
-                    user.Symbol = UserWindow.Crypto.Symbol;
-                    user.Image = UserWindow.Crypto.Image;
-                    user.Price = UserWindow.Crypto.Price;
-                    user.Volume = UserWindow.Crypto.Volume;
-                    user.Symbol = UserWindow.Crypto.Symbol;
-                    user.MarketCap = UserWindow.Crypto.MarketCap;
-                    user.TransactionsCount = UserWindow.Crypto.TransactionsCount;
+                    crypto.Name = UserWindow.Crypto.Name;
+                    crypto.Symbol = UserWindow.Crypto.Symbol;
+                    crypto.Image = UserWindow.Crypto.Image;
+                    crypto.Price = UserWindow.Crypto.Price;
+                    crypto.Volume = UserWindow.Crypto.Volume;
+                    crypto.Symbol = UserWindow.Crypto.Symbol;
+                    crypto.MarketCap = UserWindow.Crypto.MarketCap;
+                    crypto.TransactionsCount = UserWindow.Crypto.TransactionsCount;
+                    db.SaveChanges();
+                    db.Shots.Add(new Shot
+                    {
+                        CryptoId = crypto.Id,
+                        MarketCap = crypto.MarketCap,
+                        Volume = crypto.Volume,
+                        Price = crypto.Price,
+                        Transactions = crypto.TransactionsCount,
+                        Time = DateTime.Now
+                    });
                     db.SaveChanges();
                     cryptoList.Items.Refresh();
                 }

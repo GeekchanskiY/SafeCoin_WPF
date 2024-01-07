@@ -16,34 +16,24 @@ Background="#1B1B2F"
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Id" Foreground="#FFF" />
-            <TextBlock Text="UserId" Grid.Row="1" Foreground="#FFF"/>
-        <TextBlock Text="CryptoId" Grid.Row="2" Foreground="#FFF"/>
-        <TextBlock Text="Title" Grid.Row="4" Foreground="#FFF" />
-            <TextBlock Text="Text" Grid.Row="5" Foreground="#FFF" />
-            <TextBlock Text="Time" Grid.Row="6" Foreground="#FFF" />
-
-            <TextBox Text="{Binding Id}" Grid.Column="1" />
-            <TextBox Text="{Binding UserId}" Grid.Column="1" Grid.Row="1" />
-        <TextBox Text="{Binding CryptoId}" Grid.Column="1" Grid.Row="2" />
-        <TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="4" />
-            <TextBox Text="{Binding Text}" Grid.Column="1" Grid.Row="5" />
-            <TextBox Text="{Binding Time}" Grid.Column="1" Grid.Row="6" />
+        <TextBlock Text="Title" Grid.Row="1" Foreground="#FFF" />
+            <TextBlock Text="Text" Grid.Row="2" Foreground="#FFF" />
+            <TextBlock Text="Time" Grid.Row="3" Foreground="#FFF" />
+        <TextBox Text="{Binding Title}" Grid.Column="1" Grid.Row="1" />
+            <TextBox Text="{Binding Text}" Grid.Column="1" Grid.Row="2" />
+            <TextBox Text="{Binding Time}" Grid.Column="1" Grid.Row="3" />
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
-                <Button IsDefault="True" Click="Accept_Click" >OK</Button>
-                <Button IsCancel="True" >Отмена</Button>
+            <Button IsDefault="True" Click="Accept_Click"  Height="40" Padding="5,0,5,0" >OK</Button>
+                <Button IsCancel="True" Margin="10,0,0,0"  Height="40" Padding="5,0,5,0">Cancel</Button>
             </StackPanel>
             
         </Grid>

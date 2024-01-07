@@ -72,13 +72,16 @@ namespace WPF_Course_project.ViewModels
             int counter = 0;
             List<DateModel> dataPoints = new List<DateModel>();
             ObservableCollection<Shot> shots = new ObservableCollection<Shot>(db.Shots.Where(shot => shot.CryptoId == this.CryptoId).ToList());
-            foreach (Shot s in shots)
-            {
-                counter += 1;
-                dataPoints.Add(new DateModel { DateTime = s.Time, Value = s.Price });
+            if (shots.Count >= 2)
+            { // Else LiveCharts Error!
+                foreach (Shot s in shots)
+                {
+                    counter += 1;
+                    dataPoints.Add(new DateModel { DateTime = s.Time, Value = s.Price });
 
 
-            };
+                };
+            }
 
             return dataPoints;
         }

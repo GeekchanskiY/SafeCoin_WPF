@@ -98,6 +98,7 @@ namespace WPF_Course_project.Views.Pages
             s.UserId = App.CurrentUser.Id;
             db.CryptoSubs.Add(s);
             db.SaveChanges();
+            MessageBox.Show("Subscribed!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         public void SubMKT(object sender, RoutedEventArgs e)
         {
@@ -114,6 +115,7 @@ namespace WPF_Course_project.Views.Pages
             s.UserId = App.CurrentUser.Id;
             db.CryptoSubs.Add(s);
             db.SaveChanges();
+            MessageBox.Show("Subscribed!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         public void SubVol(object sender, RoutedEventArgs e)
         {
@@ -130,6 +132,7 @@ namespace WPF_Course_project.Views.Pages
             s.UserId = App.CurrentUser.Id;
             db.CryptoSubs.Add(s);
             db.SaveChanges();
+            MessageBox.Show("Subscribed!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }

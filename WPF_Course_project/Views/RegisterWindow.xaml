@@ -39,13 +39,13 @@ Background="#1B1B2F"
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="5" Grid.ColumnSpan="2">
             <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
         </StackPanel>
-        <TextBox x:Name="username" GotFocus="username_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="114"/>
-        <TextBox x:Name="email" GotFocus="email_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,41,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="114"/>
-        <TextBox x:Name="password" GotFocus="password_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,51,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="114"/>
-        <Label Foreground="#FFF" Grid.Column="3" Content="Register" HorizontalAlignment="Center" Margin="0,46,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox x:Name="rpassword" GotFocus="rpassword_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Repeat password" VerticalAlignment="Top" Width="120"/>
-        <Button Click="register_Click" Grid.Column="3" Content="Register" HorizontalAlignment="Left" Margin="31,53,0,0" Grid.Row="4" VerticalAlignment="Top"/>
-        <Label Foreground="#FFF" x:Name="validationError" Grid.Column="2" Grid.ColumnSpan="3" Content="Validation Errors" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" RenderTransformOrigin="0.279,0.419"/>
-        <TextBox x:Name="aboutMe" GotFocus="about_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="3" TextWrapping="Wrap" Text="About me" VerticalAlignment="Top" Width="120"/>
+        <TextBox Style="{StaticResource MinimalisticTextBox}" Padding="3,2,2,3" x:Name="username" GotFocus="username_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="100"/>
+        <TextBox Style="{StaticResource MinimalisticTextBox}" Padding="3,2,2,3" x:Name="email" GotFocus="email_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,40,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="100"/>
+        <TextBox Style="{StaticResource MinimalisticTextBox}" Padding="3,2,2,3" x:Name="password" GotFocus="password_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,50,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="100"/>
+        <Label Foreground="#FFF" FontWeight="SemiBold" FontSize="20" Grid.Column="3" Content="Register" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBox Style="{StaticResource MinimalisticTextBox}" Padding="3,2,2,3" x:Name="rpassword" GotFocus="rpassword_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Repeat password" VerticalAlignment="Top" Width="100"/>
+        <Button Style="{StaticResource MinimalisticButton}" Padding="3,2,2,3" Click="register_Click" Grid.Column="3" Content="Register" Margin="0,10,0,0" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Top"/>
+        <Label Foreground="#FFF" x:Name="validationError" Grid.Column="2" Grid.ColumnSpan="3" Content="Validation Errors" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Bottom" />
+        <TextBox Style="{StaticResource MinimalisticTextBox}" Padding="3,2,2,3" x:Name="aboutMe" GotFocus="about_Click" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="3" TextWrapping="Wrap" Text="About me" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
