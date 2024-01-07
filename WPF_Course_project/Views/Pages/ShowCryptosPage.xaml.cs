@@ -1,40 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPF_Course_project.Models;
-using WPF_Course_project.Views;
-using Microsoft.EntityFrameworkCore;
 
-
-namespace WPF_Course_project.Views
+namespace WPF_Course_project.Views.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для CryptoAdminWindow.xaml
+    /// Логика взаимодействия для ShowCryptosPage.xaml
     /// </summary>
-    
-    public partial class CryptoAdminWindow : Window
+
+    public partial class ShowCryptosPage : Page
     {
         ApplicationContext db = new ApplicationContext();
-        public CryptoAdminWindow()
+
+        public ShowCryptosPage()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            // Application.Current.Shutdown();
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,14 +47,14 @@ namespace WPF_Course_project.Views
             }
             else
             {
-                MessageBox.Show("Admin panel button appeared on left bottom corner", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
+                // MessageBox.Show("Admin panel button appeared on left bottom corner", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
         }
         // редактирование
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-     
+
             // получаем выделенный объект
             Crypto? user = cryptoList.SelectedItem as Crypto;
             // если ни одного объекта не выделено, выходим
@@ -85,7 +68,7 @@ namespace WPF_Course_project.Views
                 user = db.Cryptos.Find(UserWindow.Crypto.Id);
                 if (user != null)
                 {
-                    user.Name = UserWindow.Crypto.Name; 
+                    user.Name = UserWindow.Crypto.Name;
                     user.Symbol = UserWindow.Crypto.Symbol;
                     user.Image = UserWindow.Crypto.Image;
                     user.Price = UserWindow.Crypto.Price;
@@ -98,7 +81,17 @@ namespace WPF_Course_project.Views
                 }
             }
         }
-        // удаление
+        private void Shots_Click(object sender, RoutedEventArgs e)
+        {
+            Crypto? user = cryptoList.SelectedItem as Crypto;
+            // если ни одного объекта не выделено, выходим
+            if (user is null) return;
+            ShotAdminWindow shotAdminWindow = new ShotAdminWindow(user);
+            if (shotAdminWindow.ShowDialog() == true)
+            {
+                db.SaveChanges();
+            }
+        }
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             // получаем выделенный объект
@@ -108,6 +101,5 @@ namespace WPF_Course_project.Views
             db.Cryptos.Remove(user);
             db.SaveChanges();
         }
-
     }
 }

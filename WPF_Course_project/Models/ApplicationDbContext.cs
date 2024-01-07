@@ -16,6 +16,8 @@ namespace WPF_Course_project.Models
 
         public DbSet<Review> Reviews { get; set; } = null!;
 
+        public DbSet<CryptoSub> CryptoSubs { get; set; } = null!;
+
         public ApplicationContext() {
             // Database.EnsureDeleted();
             Database.EnsureCreated();
@@ -31,6 +33,7 @@ namespace WPF_Course_project.Models
             modelBuilder.Entity<Crypto>().HasKey(x => x.Id);
             modelBuilder.Entity<Shot>().HasKey(x => x.Id);
             modelBuilder.Entity<User>().HasKey(x => x.Id);
+            modelBuilder.Entity<CryptoSub>().HasKey(x => x.Id);
             
 
             modelBuilder.Entity<Review>()
@@ -47,6 +50,16 @@ namespace WPF_Course_project.Models
                 .HasOne(s => s.Crypto)
                 .WithMany(c => c.Shots)
                 .HasForeignKey(s => s.CryptoId);
+
+            modelBuilder.Entity<CryptoSub>()
+                .HasOne(s => s.Crypto)
+                .WithMany(c => c.CryptoSubs)
+                .HasForeignKey(s => s.CryptoId);
+
+            modelBuilder.Entity<CryptoSub>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.CryptoSubs)
+                .HasForeignKey(s => s.UserId);
 
             base.OnModelCreating(modelBuilder);
         }

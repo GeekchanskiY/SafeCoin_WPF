@@ -17,14 +17,7 @@ Background="#1B1B2F"
     </WindowChrome.WindowChrome>
     <Grid>
         <!-- Grid definition -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" ></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -35,27 +28,20 @@ Background="#1B1B2F"
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <!-- Header -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="5" Grid.ColumnSpan="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Grid.Column="6" Grid.ColumnSpan="1">
             <Button x:Name="btnClose" Click="btnClose_Click" Content="X" Width="40" Height="40" BorderBrush="Transparent"  Background="Transparent" Foreground="#F5F5F5"></Button>
         </StackPanel>
+        <Frame x:Name="DisplayAdminMain" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" NavigationUIVisibility="Hidden">
+        </Frame>
 
         <!-- Content -->
-        <ListBox x:Name="usersList" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Username}" FontSize="16" />
-                        <TextBlock Text="{Binding Id}" FontSize="8" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="testaddbutton" Content="Добавить" Margin="10" Click="Add_Click" />
-            <Button Content="Изменить" Margin="10" Click="Edit_Click"  />
-            <Button Content="Удалить" Margin="10" Click="Delete_Click"  />
-        </StackPanel>
-        <Button Grid.Column="4" Content="Cryptos" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Click="Button_Click"/>
-        <Button Grid.Column="4" Content="Reviews" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center"/>
+
+        <Button x:Name="ListUsers" Click="ShowUsersPage_Click" Content="Users" Grid.Column="0" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ListCrypto" Click="ShowCryptoPage_Click" Content="Cryptos" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ListReviews" Click="ShowReviewsPage_Click" Content="Reviews" Grid.Column="2" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -17,6 +17,7 @@ namespace WPF_Course_project
     /// </summary>
     public partial class App : Application
     {
+        
         public static App Me => ((App)Application.Current);
         
         public static HttpClient client = new HttpClient();

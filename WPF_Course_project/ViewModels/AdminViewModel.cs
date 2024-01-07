@@ -7,8 +7,12 @@ using WPF_Course_project.Models;
 
 namespace WPF_Course_project.ViewModels
 {
-    public class AdminViewModel
+    public class AdminViewModel: ViewModelBase
     {
         ApplicationContext db = new ApplicationContext();
+        public AdminViewModel() {
+            db.Database.EnsureCreated();
+
+        }
     }
 }

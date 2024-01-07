@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF_Course_project.Models;
 
-namespace WPF_Course_project.Views
+namespace WPF_Course_project.Views.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для ShotWindow.xaml
+    /// Логика взаимодействия для DisplayCryptoAddReviewPage.xaml
     /// </summary>
-    public partial class ShotWindow : Window
+    public partial class DisplayCryptoAddReviewPage : Page
     {
-        public Shot Shot { get; private set; }
-        public ShotWindow(Shot shot)
+        public DisplayCryptoAddReviewPage()
         {
             InitializeComponent();
-            Shot = shot;
-            
-            DataContext = Shot;
-
-        }
-        void Accept_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
         }
     }
 }

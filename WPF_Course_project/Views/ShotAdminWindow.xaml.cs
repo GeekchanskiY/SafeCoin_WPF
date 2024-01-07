@@ -49,7 +49,14 @@ namespace WPF_Course_project.Views
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             // READY
-            ShotWindow shotWindow = new ShotWindow(new Shot());
+            ShotWindow shotWindow = new ShotWindow(new Shot {
+                CryptoId = RelatedCrypto.Id,
+                Time = DateTime.Now,
+                Price=RelatedCrypto.Price,
+                MarketCap=RelatedCrypto.MarketCap,
+                Transactions=RelatedCrypto.TransactionsCount,
+                Volume=RelatedCrypto.Volume
+            });
             if (shotWindow.ShowDialog() == true)
             {
                 Shot shot = shotWindow.Shot;
@@ -76,9 +83,10 @@ namespace WPF_Course_project.Views
             {
                 // получаем измененный объект
                 shot = db.Shots.Find(shotWindow.Shot.Id);
+                
                 if (shot != null)
                 {
-                    // ADD HERE
+                   
                     shot.Time = shotWindow.Shot.Time;
                     shot.Price = shotWindow.Shot.Price;
                     shot.MarketCap = shotWindow.Shot.MarketCap;

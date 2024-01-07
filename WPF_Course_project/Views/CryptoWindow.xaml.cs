@@ -43,6 +43,8 @@ namespace WPF_Course_project.Views
         void ShowShots(object sender, RoutedEventArgs e)
         {
             ShotAdminWindow win = new ShotAdminWindow(Crypto);
+
+
             win.ShowDialog();
         }
     }

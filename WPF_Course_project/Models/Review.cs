@@ -25,7 +25,9 @@ namespace WPF_Course_project.Models
         private string title;
         private string text;
         private DateTime time;
-
+        public string Title { get => title; set { title = value; OnPropertyChanged("Title"); } }
+        public string Text { get => text; set { text = value; OnPropertyChanged("Text"); } }
+        public DateTime Time { get => time; set { time = value; OnPropertyChanged("Time"); } }
         public int CryptoId { get; set; }
         public Crypto Crypto { get; set; }
 

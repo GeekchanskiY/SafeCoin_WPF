@@ -70,6 +70,7 @@ namespace WPF_Course_project.Models
         }
 
         public List<Review> Reviews { get; set; }
+        public List<CryptoSub> CryptoSubs { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged; //Событие, которое будет вызвано при изменении модели 
         public void OnPropertyChanged([CallerMemberName] string prop = "") //Метод, который скажет ViewModel, что нужно передать виду новые данные

@@ -27,6 +27,8 @@ namespace WPF_Course_project.Views
         public ObservableCollection<User> Users { get; set; }
         private bool isDragging = false;
         private Point startPoint;
+        private string currentPassword = string.Empty;
+        
         public LoginWindow()
         {
             InitializeComponent();
@@ -104,7 +106,7 @@ namespace WPF_Course_project.Views
                     // MessageBox.Show("User created successfully");
                 }
                 App.CurrentUser = existingUser;
-                // MessageBox.Show("Login success", App.CurrentUser.IsAdmin.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                // 
                 Close();
             } else
             {
@@ -156,6 +158,16 @@ namespace WPF_Course_project.Views
                 }
                 
             }
+        }
+
+        private void passwordInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void usernameInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
         }
     }
 }

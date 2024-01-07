@@ -69,6 +69,49 @@ namespace WPF_Course_project.Models
 
         public List<Shot> Shots { get; set; }
 
+        public List<CryptoSub> CryptoSubs { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged; //Событие, которое будет вызвано при изменении модели 
+        public void OnPropertyChanged([CallerMemberName] string prop = "") //Метод, который скажет ViewModel, что нужно передать виду новые данные
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+
+    public class CryptoSub: INotifyPropertyChanged
+    {
+        private int id;
+        public int Id {
+            get => id;
+            set { id = value; OnPropertyChanged("CryptoSubId"); }
+        }
+        private string param;
+        public string Param
+        {
+            get => param;
+            set { param = value; OnPropertyChanged("Param"); }
+        }
+
+        private string requiredValue;
+        public string RequiredValue
+        {
+            get => requiredValue;
+            set { requiredValue = value; OnPropertyChanged("RequiredValue"); }
+        }
+
+        private string lastValue;
+        public string LastValue
+        {
+            get => lastValue;
+            set { lastValue = value; OnPropertyChanged("Value"); }
+        }
+
+        public int CryptoId { get; set; }
+        public Crypto Crypto { get ; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged; //Событие, которое будет вызвано при изменении модели 
         public void OnPropertyChanged([CallerMemberName] string prop = "") //Метод, который скажет ViewModel, что нужно передать виду новые данные

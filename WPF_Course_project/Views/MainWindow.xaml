@@ -14,9 +14,13 @@
         Title="MainWindow" Height="480" Width="640"
         MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseMove="Window_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp"
         >
+    <Window.Resources>
+        <local:ImageUrlConverter x:Key="ImageUrlConverter" />
+    </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"></WindowChrome>
     </WindowChrome.WindowChrome>
+
     <Grid>
         <!-- Grid definition -->
         <Grid.RowDefinitions>
@@ -52,22 +56,47 @@
                 <Image x:Name="UserIcon" Width="40px" Height="40px" Source="/Assets/user_icon.png" Stretch="Fill" />
             </Button>
         </StackPanel>
-        <Button x:Name="AdminButton" Content="Admin" Margin="0,68,0,0" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Click="Button_Click_1" Visibility="Hidden"/>
+        <Button x:Name="AdminButton" Content="Admin" Margin="0,55,0,0" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Height="25" Click="Button_Click_1" Style="{StaticResource MinimalisticButton}" Visibility="Hidden">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Padding" Value="0,3,0,3"></Setter>
+                    <Setter Property="CornerRadius" Value="7"/>
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <!-- Content -->
-        <ListBox x:Name="cryptoList" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="4" ItemsSource="{Binding}">
+        <ListBox Margin="0, 25, 0, 0" x:Name="cryptoList" MouseDoubleClick="SelectClick" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="4" Background="Transparent" ItemsSource="{Binding}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Id}" FontSize="8" />
-                        <TextBlock Text="{Binding Name}" FontSize="16" />
+                    <Border CornerRadius="6" BorderBrush="Gray" Background="LightGray" BorderThickness="2">
+                        <WrapPanel Orientation="Horizontal">
 
-                    </StackPanel>
+
+                            <TextBlock Text="{Binding Id}" FontSize="12" Width="10" Margin="5" />
+                            <Image Width="30" Height="30" Source="{Binding Image, Converter={StaticResource ImageUrlConverter}}" />
+                            <TextBlock Text="{Binding Name}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding Symbol}" FontSize="12"  Width="30" Margin="5" />
+                            <TextBlock Text="{Binding Price}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding Volume}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding MarketCap}" FontSize="12"  Width="50" Margin="5" />
+                            <TextBlock Text="{Binding TransactionsCount}" FontSize="12"  Width="30" Margin="5" />
+
+                        </WrapPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2">
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" Background="#4D4C7D">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -83,20 +112,109 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="#FFF">Filters</Label>
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Price</Label>
-            <TextBox x:Name="PriceFrom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <TextBox x:Name="PriceTo" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Market Cap</Label>
-            <TextBox x:Name="CapFrom" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <TextBox x:Name="CapTo" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Volume</Label>
-            <TextBox x:Name="VolumeFrom" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <TextBox x:Name="VolumeTo" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Transactions</Label>
-            <TextBox x:Name="TransactionFrom" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <TextBox x:Name="TransactionsTo" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90"/>
-            <Button x:Name="ApplyFiltersButton" Click="ApplyFilters"  Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="100">Apply</Button>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="#FFF" FontSize="18" FontWeight="SemiBold">Filters</Label>
+            <!-- Price -->
+            <Label FontSize="16" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Price</Label>
+            <TextBox x:Name="PriceFrom" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <TextBox x:Name="PriceTo" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <!-- Market Cap -->
+            <Label FontSize="16" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Market Cap</Label>
+            <TextBox x:Name="CapFrom" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <TextBox x:Name="CapTo" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <!-- Volume -->
+            <Label FontSize="16" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Volume</Label>
+            <TextBox x:Name="VolumeFrom" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <TextBox x:Name="VolumeTo"  Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <!-- Transactions -->
+            <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF" FontSize="16">Transactions</Label>
+            <TextBox x:Name="TransactionFrom" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="From" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <TextBox x:Name="TransactionsTo" Style="{StaticResource MinimalisticTextBox}" TextAlignment="Center" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To" VerticalAlignment="Center" Margin="5,0,0,0" Width="90">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <!-- Name -->
+            <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFF">Name</Label>
+            <TextBox x:Name="NameInput" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MinimalisticTextBox}" Height="20" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Name Here" VerticalAlignment="Center" Width="120" FontSize="10">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,2,0,2"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <!-- Confirm -->
+            <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="100" x:Name="ApplyFiltersButton" Click="ApplyFilters" Style="{StaticResource MinimalisticButton}" Content="Apply"  >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="0,3,0,3"></Setter>
+                        <Setter Property="CornerRadius" Value="7"/>
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Click="ResetFilters" Grid.Column="1" FontSize="16" Content="⟳" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Top" BorderBrush="Transparent" Background="Transparent" Foreground="#F5F5F5"/>
+
         </Grid>
+        <Button Click="SelectClick" Grid.Column="7" Content="Select item" HorizontalAlignment="Center" Margin="0,29,0,0" Grid.Row="5" VerticalAlignment="Top"/>
+        <Button Click="NotificationsClick" Grid.Column="4" Content="Notifications" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Foreground="#FFF" Grid.Column="4" Content="Name" HorizontalAlignment="Left" Margin="51,1,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="1.103,0.449"/>
+        <Label Foreground="#FFF" Grid.Column="5" Content="Price" HorizontalAlignment="Left" Margin="51,1,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Foreground="#FFF" Grid.Column="6" Content="Vol" HorizontalAlignment="Left" Margin="75,0,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Foreground="#FFF" Grid.Column="7" Content="Tran" HorizontalAlignment="Center" Margin="0,1,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Foreground="#FFF" Grid.Column="6" Content="Cap" HorizontalAlignment="Left" Margin="17,1,0,0" Grid.Row="1" VerticalAlignment="Top"/>
     </Grid>
 </Window>

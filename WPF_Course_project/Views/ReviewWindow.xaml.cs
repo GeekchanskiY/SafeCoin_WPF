@@ -11,17 +11,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_Course_project.Models;
 
 namespace WPF_Course_project.Views
 {
     /// <summary>
     /// Логика взаимодействия для ReviewWindow.xaml
     /// </summary>
+    
     public partial class ReviewWindow : Window
     {
-        public ReviewWindow()
+        public Review Review { get; set; }
+
+        public ReviewWindow(Review review)
         {
             InitializeComponent();
+            Review = review;
+            
+            DataContext = review;
+        }
+        void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }
